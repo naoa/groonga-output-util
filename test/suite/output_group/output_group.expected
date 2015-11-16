@@ -1,0 +1,122 @@
+plugin_register functions/output_util
+[[0,0.0,0.0],true]
+table_create Tags TABLE_PAT_KEY ShortText UInt32
+[[0,0.0,0.0],true]
+table_create Memos TABLE_HASH_KEY ShortText
+[[0,0.0,0.0],true]
+column_create Memos tags COLUMN_VECTOR Tags
+[[0,0.0,0.0],true]
+column_create Tags index COLUMN_INDEX Memos tags
+[[0,0.0,0.0],true]
+column_create Tags grouped COLUMN_SCALAR Tags
+[[0,0.0,0.0],true]
+load --table Memos
+[
+{"_key": "Nroonga", "tags": ["NodeJS", "Nroonga", "Databaso"]},
+{"_key": "MySQL", "tags": ["MySQL", "Databaso"]},
+{"_key": "PGroonga", "tags": ["PostgreSQL", "Groonga", "Database"]},
+{"_key": "Groonga", "tags": ["Groonga", "Database"]},
+{"_key": "Rroonga", "tags": ["Rroonga", "Database"]},
+{"_key": "Mroonga", "tags": ["MySQL", "Mroonga", "Database"]},
+{"_key": "Droonga", "tags": ["Dag", "Database"]},
+{"_key": "PostgreSQL", "tags": ["PostgreSQL", "Databas"]}
+]
+[[0,0.0,0.0],8]
+column_create Tags ref COLUMN_SCALAR Tags
+[[0,0.0,0.0],true]
+column_create Tags ref_index COLUMN_INDEX Tags ref
+[[0,0.0,0.0],true]
+load --table Tags
+[
+{"_key": "Databaso", "ref": "Database", "grouped": "dataC"},
+{"_key": "Databas", "ref": "Databaso", "grouped": "dataB"},
+{"_key": "Database", "ref": "Databasu", "grouped": "dataB"},
+{"_key": "Dag", "ref": "Databasu", "grouped": "betaB"}
+]
+[[0,0.0,0.0],4]
+select Tags --output_columns '_key,output_group(_key,Tags.ref,"grouped","grouped @ \\"data\\"")' --command_version 2
+[
+  [
+    0,
+    0.0,
+    0.0
+  ],
+  [
+    [
+      [
+        15
+      ],
+      [
+        [
+          "_key",
+          "ShortText"
+        ],
+        [
+          "output_group",
+          "Object"
+        ]
+      ],
+      [
+        "Dag",
+        [
+
+        ]
+      ],
+      [
+        "Databas",
+        [
+          "dataB",
+          "dataC"
+        ]
+      ],
+      [
+        "Database",
+        [
+          "dataC"
+        ]
+      ],
+      [
+        "Databaso",
+        [
+          "dataB"
+        ]
+      ],
+      [
+        "Databasu",
+        [
+          "dataB"
+        ]
+      ],
+      [
+        "Groonga",
+        [
+
+        ]
+      ],
+      [
+        "Mroonga",
+        [
+
+        ]
+      ],
+      [
+        "MySQL",
+        [
+
+        ]
+      ],
+      [
+        "NodeJS",
+        [
+
+        ]
+      ],
+      [
+        "Nroonga",
+        [
+
+        ]
+      ]
+    ]
+  ]
+]

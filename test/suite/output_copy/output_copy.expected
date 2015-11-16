@@ -1,0 +1,110 @@
+plugin_register functions/output_util
+[[0,0.0,0.0],true]
+table_create Memos TABLE_HASH_KEY ShortText
+[[0,0.0,0.0],true]
+column_create Memos title COLUMN_SCALAR ShortText
+[[0,0.0,0.0],true]
+column_create Memos title_2 COLUMN_SCALAR ShortText
+[[0,0.0,0.0],true]
+load --table Memos
+[
+{"_key": "Groonga", "title": "Database"}
+]
+[[0,0.0,0.0],1]
+select Memos --output_columns '_key,title,title_2'
+[
+  [
+    0,
+    0.0,
+    0.0
+  ],
+  [
+    [
+      [
+        1
+      ],
+      [
+        [
+          "_key",
+          "ShortText"
+        ],
+        [
+          "title",
+          "ShortText"
+        ],
+        [
+          "title_2",
+          "ShortText"
+        ]
+      ],
+      [
+        "Groonga",
+        "Database",
+        ""
+      ]
+    ]
+  ]
+]
+select Memos --output_columns '_key,output_copy(title,_key,Memos.title_2)' --command_version 2
+[
+  [
+    0,
+    0.0,
+    0.0
+  ],
+  [
+    [
+      [
+        1
+      ],
+      [
+        [
+          "_key",
+          "ShortText"
+        ],
+        [
+          "output_copy",
+          "Object"
+        ]
+      ],
+      [
+        "Groonga",
+        "Database"
+      ]
+    ]
+  ]
+]
+select Memos --output_columns '_key,title,title_2'
+[
+  [
+    0,
+    0.0,
+    0.0
+  ],
+  [
+    [
+      [
+        1
+      ],
+      [
+        [
+          "_key",
+          "ShortText"
+        ],
+        [
+          "title",
+          "ShortText"
+        ],
+        [
+          "title_2",
+          "ShortText"
+        ]
+      ],
+      [
+        "Groonga",
+        "Database",
+        "Database"
+      ]
+    ]
+  ]
+]

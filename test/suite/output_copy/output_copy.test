@@ -1,0 +1,16 @@
+plugin_register functions/output_util
+
+table_create Memos TABLE_HASH_KEY ShortText
+column_create Memos title COLUMN_SCALAR ShortText
+column_create Memos title_2 COLUMN_SCALAR ShortText
+
+load --table Memos
+[
+{"_key": "Groonga", "title": "Database"}
+]
+
+select Memos --output_columns '_key,title,title_2'
+
+select Memos --output_columns '_key,output_copy(title,_key,Memos.title_2)' --command_version 2
+
+select Memos --output_columns '_key,title,title_2'

@@ -1,0 +1,32 @@
+plugin_register functions/output_util
+
+table_create Tags TABLE_PAT_KEY ShortText UInt32
+
+table_create Memos TABLE_HASH_KEY ShortText
+column_create Memos tags COLUMN_VECTOR Tags
+
+column_create Tags index COLUMN_INDEX Memos tags
+column_create Tags grouped COLUMN_SCALAR Tags
+
+load --table Memos
+[
+{"_key": "Nroonga", "tags": ["NodeJS", "Nroonga", "Databaso"]},
+{"_key": "MySQL", "tags": ["MySQL", "Databaso"]},
+{"_key": "PGroonga", "tags": ["PostgreSQL", "Groonga", "Database"]},
+{"_key": "Groonga", "tags": ["Groonga", "Database"]},
+{"_key": "Rroonga", "tags": ["Rroonga", "Database"]},
+{"_key": "Mroonga", "tags": ["MySQL", "Mroonga", "Database"]},
+{"_key": "Droonga", "tags": ["Dag", "Database"]},
+{"_key": "PostgreSQL", "tags": ["PostgreSQL", "Databas"]}
+]
+column_create Tags ref COLUMN_SCALAR Tags
+column_create Tags ref_index COLUMN_INDEX Tags ref
+load --table Tags
+[
+{"_key": "Databaso", "ref": "Database", "grouped": "dataC"},
+{"_key": "Databas", "ref": "Databaso", "grouped": "dataB"},
+{"_key": "Database", "ref": "Databasu", "grouped": "dataB"},
+{"_key": "Dag", "ref": "Databasu", "grouped": "betaB"}
+]
+
+select Tags --output_columns '_key,output_group(_key,Tags.ref,"grouped","grouped @ \\"data\\"")' --command_version 2
